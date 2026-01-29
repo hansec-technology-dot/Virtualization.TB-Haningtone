@@ -3,1185 +3,2032 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ouma Haningtone | ICT Specialist & Developer</title>
+    <title>Market Visual Analysis Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        /* ===== LUXURY STYLES ===== */
-        :root {
-            --primary-gold: #D4AF37;
-            --dark-bg: #0A0A0A;
-            --light-bg: #1A1A1A;
-            --text-light: #F5F5F5;
-            --text-gray: #AAAAAA;
-            --accent-blue: #4A90E2;
-            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
+     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            overflow-x: hidden;
+            color: #333;
+            background-color: #f8f9fa;
         }
 
         .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Animated Profile Image with Rotating Frame */
+        .profile-image-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            padding: 5px;
+            animation: autoRotateFrame 12s linear infinite;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Frame Styles for Auto Rotation */
+        .frame-style-1 {
+            background: conic-gradient(
+                from 0deg,
+                #ff6b6b, #ffa726, #ffee58, #66bb6a, 
+                #42a5f5, #5c6bc0, #ff6b6b
+            );
+        }
+
+        .frame-style-2 {
+            background: linear-gradient(45deg, 
+                #ff0080, #ff8c00, #40e0d0, #0061ff,
+                #ff0080
+            );
+            background-size: 400% 400%;
+            animation: gradientFrame 3s ease infinite;
+        }
+
+        .frame-style-3 {
+            background: conic-gradient(
+                from 0deg,
+                #ff0000, #ff8000, #ffff00, #80ff00,
+                #00ff00, #00ff80, #00ffff, #0080ff,
+                #0000ff, #8000ff, #ff00ff, #ff0080,
+                #ff0000
+            );
+        }
+
+        .frame-style-4 {
+            background: 
+                radial-gradient(circle at 30% 30%, #667eea, transparent 50%),
+                radial-gradient(circle at 70% 70%, #f093fb, transparent 50%),
+                radial-gradient(circle at 50% 50%, #f5576c, transparent 60%);
+            background-size: 200% 200%;
+            animation: moveBackground 8s ease-in-out infinite;
+        }
+
+        .frame-style-5 {
+            background: 
+                linear-gradient(45deg, #00ff87, #60efff, #0061ff),
+                radial-gradient(circle, #ff0080, transparent 70%);
+            background-blend-mode: overlay;
+            background-size: 300% 300%;
+            animation: gradientMove 6s ease infinite;
+        }
+
+        /* Auto Rotation Animation */
+        @keyframes autoRotateFrame {
+            0%, 16.6% {
+                background: conic-gradient(
+                    from 0deg,
+                    #ff6b6b, #ffa726, #ffee58, #66bb6a, 
+                    #42a5f5, #5c6bc0, #ff6b6b
+                );
+                box-shadow: 0 4px 20px rgba(255, 107, 107, 0.5);
+            }
+            16.7%, 33.3% {
+                background: linear-gradient(45deg, 
+                    #ff0080, #ff8c00, #40e0d0, #0061ff,
+                    #ff0080
+                );
+                background-size: 400% 400%;
+                box-shadow: 0 4px 20px rgba(255, 0, 128, 0.5);
+            }
+            33.4%, 50% {
+                background: conic-gradient(
+                    from 0deg,
+                    #ff0000, #ff8000, #ffff00, #80ff00,
+                    #00ff00, #00ff80, #00ffff, #0080ff,
+                    #0000ff, #8000ff, #ff00ff, #ff0080,
+                    #ff0000
+                );
+                box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5);
+            }
+            50.1%, 66.6% {
+                background: 
+                    radial-gradient(circle at 30% 30%, #667eea, transparent 50%),
+                    radial-gradient(circle at 70% 70%, #f093fb, transparent 50%),
+                    radial-gradient(circle at 50% 50%, #f5576c, transparent 60%);
+                background-size: 200% 200%;
+                box-shadow: 0 4px 20px rgba(102, 126, 234, 0.5);
+            }
+            66.7%, 83.3% {
+                background: 
+                    linear-gradient(45deg, #00ff87, #60efff, #0061ff),
+                    radial-gradient(circle, #ff0080, transparent 70%);
+                background-blend-mode: overlay;
+                background-size: 300% 300%;
+                box-shadow: 0 4px 20px rgba(0, 255, 135, 0.5);
+            }
+            83.4%, 100% {
+                background: conic-gradient(
+                    from 0deg,
+                    #8e44ad, #9b59b6, #2980b9, #3498db,
+                    #1abc9c, #2ecc71, #f1c40f, #e67e22,
+                    #e74c3c, #8e44ad
+                );
+                box-shadow: 0 4px 20px rgba(142, 68, 173, 0.5);
+            }
+        }
+
+        /* Additional Animations */
+        @keyframes gradientFrame {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes moveBackground {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes rotateFrame {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Frame Controls */
+        .frame-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .frame-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 20px;
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .frame-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .frame-btn.active {
+            background: #e74c3c;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
+        header h1 {
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        header p {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        nav ul {
+            display: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin-right: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a:hover, nav a.active {
+            border-bottom: 2px solid #3498db;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .executive-summary h2 {
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .dashboard-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .dashboard-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .contact-info {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #ddd;
+        }
+
+        .contact-info h2 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .contact-info a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-controls select, .filter-controls input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .chart-title {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .chart-wrapper {
+            height: 400px;
+            position: relative;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-controls {
+                width: 100%;
+            }
+            
+            .filter-controls select, .filter-controls input {
+                flex: 1;
+                min-width: 150px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-image-container {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        .dashboard-page {
+            display: none;
+        }
+
+        .dashboard-page.active {
+            display: block;
+        }
+
+        /* =========================== */
+        /* PROJECT DOWNLOAD HUB STYLES */
+        /* =========================== */
+        .download-hub-section {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            padding: 60px 0;
+            margin-top: 40px;
+        }
+        
+        .download-hub-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
-        /* ===== TYPOGRAPHY ===== */
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
+        
+        .download-hub-header {
+            text-align: center;
+            padding: 30px 0 40px;
         }
-
-        h1 {
-            font-size: 3.5rem;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, var(--primary-gold), #FFD700);
+        
+        .download-hub-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #00b4db, #0083b0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-
-        h2 {
-            font-size: 2.5rem;
-            color: var(--primary-gold);
-            position: relative;
-            display: inline-block;
-            margin-bottom: 40px;
-        }
-
-        h2:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: var(--primary-gold);
-        }
-
-        h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--text-light);
-        }
-
-        p {
-            color: var(--text-gray);
-            margin-bottom: 20px;
-            font-size: 1.05rem;
-        }
-
-        /* ===== NAVIGATION ===== */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-            transition: var(--transition);
-        }
-
-        nav.scrolled {
-            padding: 15px 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--primary-gold);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo i {
-            margin-right: 10px;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 40px;
-        }
-
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-links a:after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-gold);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-gold);
-        }
-
-        .nav-links a:hover:after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* ===== HERO SECTION ===== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 100px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(10, 10, 10, 1) 100%);
-            z-index: -1;
-        }
-
-        .hero-content {
-            flex: 1;
-            max-width: 600px;
-        }
-
-        .hero-subtitle {
+        
+        .download-hub-subtitle {
             font-size: 1.2rem;
-            color: var(--primary-gold);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            color: #b0d7ff;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            line-height: 1.6;
         }
-
-        .hero-description {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .profile-img {
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--dark-bg), var(--light-bg));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid var(--primary-gold);
-        }
-
-        .profile-img:before {
-            content: '';
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            background: conic-gradient(transparent, var(--primary-gold), transparent 30%);
-            animation: rotate 8s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .profile-img-inner {
-            width: 95%;
-            height: 95%;
-            border-radius: 50%;
-            background-color: var(--dark-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1;
-            position: relative;
-        }
-
-        .profile-img-inner i {
-            font-size: 8rem;
-            color: var(--primary-gold);
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border-radius: 4px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            border: none;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-gold);
-            color: var(--dark-bg);
-        }
-
-        .btn-primary:hover {
-            background-color: #FFD700;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--text-light);
-            border: 2px solid var(--primary-gold);
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(212, 175, 55, 0.1);
-            transform: translateY(-3px);
-        }
-
-        /* ===== SECTIONS ===== */
-        section {
-            padding: 100px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h2:after {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        /* ===== SKILLS ===== */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .skill-card {
-            background-color: var(--light-bg);
-            padding: 30px;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary-gold);
-            transition: var(--transition);
-        }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .skill-icon {
-            font-size: 2.5rem;
-            color: var(--primary-gold);
-            margin-bottom: 20px;
-        }
-
-        .skill-tags {
+        
+        .download-hub-content {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .tag {
-            background-color: rgba(212, 175, 55, 0.1);
-            color: var(--primary-gold);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        /* ===== EXPERIENCE ===== */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline:before {
-            content: '';
-            position: absolute;
-            left: 30px;
-            top: 0;
-            height: 100%;
-            width: 2px;
-            background: var(--primary-gold);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 50px;
-            padding-left: 80px;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 22px;
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: var(--primary-gold);
-            border: 4px solid var(--dark-bg);
-        }
-
-        .timeline-date {
-            color: var(--primary-gold);
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        /* ===== PROJECTS ===== */
-        .projects-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
-        }
-
-        .project-card {
-            background-color: var(--light-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .project-img {
-            height: 200px;
-            background-color: #2A2A2A;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-gold);
-            font-size: 4rem;
-        }
-
-        .project-content {
-            padding: 25px;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .project-link {
-            color: var(--primary-gold);
-            text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: var(--transition);
-        }
-
-        .project-link:hover {
-            color: #FFD700;
-        }
-
-        /* ===== CONTACT ===== */
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 50px;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(212, 175, 55, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-gold);
-            font-size: 1.2rem;
-        }
-
-        .contact-form {
-            background-color: var(--light-bg);
-            padding: 40px;
-            border-radius: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            color: var(--text-light);
-            font-family: 'Montserrat', sans-serif;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-gold);
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background-color: #050505;
-            padding: 60px 0 30px;
-            text-align: center;
-            border-top: 1px solid rgba(212, 175, 55, 0.1);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
             margin-bottom: 40px;
         }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--light-bg);
+        
+        .download-hub-main {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .download-hub-side {
+            flex: 2;
+            min-width: 280px;
+        }
+        
+        .download-hub-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .download-hub-panel h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #7fd1ff;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--text-light);
-            font-size: 1.2rem;
-            transition: var(--transition);
-            text-decoration: none;
+            gap: 10px;
         }
-
-        .social-link:hover {
-            background-color: var(--primary-gold);
-            color: var(--dark-bg);
-            transform: translateY(-5px);
+        
+        .download-hub-panel h2 i {
+            color: #00b4db;
         }
-
-        .copyright {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            margin-top: 30px;
+        
+        /* Download Section */
+        .download-section {
+            text-align: center;
         }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 992px) {
-            h1 { font-size: 2.8rem; }
-            h2 { font-size: 2.2rem; }
-            
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding-top: 150px;
-            }
-            
-            .hero-content {
-                max-width: 100%;
-                margin-bottom: 60px;
-            }
-            
-            .hero-bg {
-                width: 100%;
-                height: 50%;
-                top: auto;
-                bottom: 0;
-            }
-            
-            .profile-img {
-                width: 300px;
-                height: 300px;
-            }
-            
-            .timeline:before {
-                left: 20px;
-            }
-            
-            .timeline-item {
-                padding-left: 60px;
-            }
-            
-            .timeline-dot {
-                left: 12px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .nav-links.active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--dark-bg);
-                padding: 20px;
-                border-top: 1px solid rgba(212, 175, 55, 0.1);
-            }
-            
-            .nav-links.active li {
-                margin: 15px 0;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-        /* ===== ANIMATIONS ===== */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== LOADING ANIMATION ===== */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--dark-bg);
+        
+        .light-indicator {
             display: flex;
-            align-items: center;
             justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            gap: 15px;
+            margin: 25px 0 35px;
+            flex-wrap: wrap;
         }
-
-        .loading.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .spinner {
+        
+        .light {
             width: 70px;
             height: 70px;
-            border: 5px solid rgba(212, 175, 55, 0.2);
-            border-top: 5px solid var(--primary-gold);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            background-color: #333;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .light::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            box-shadow: 0 0 20px currentColor;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .light.active::after {
+            opacity: 1;
+        }
+        
+        .light.red.active {
+            background-color: #ff416c;
+            box-shadow: 0 0 25px #ff416c;
+        }
+        
+        .light.blue.active {
+            background-color: #00b4db;
+            box-shadow: 0 0 25px #00b4db;
+        }
+        
+        .light.green.active {
+            background-color: #24fe41;
+            box-shadow: 0 0 25px #24fe41;
+        }
+        
+        .light.yellow.active {
+            background-color: #ffd166;
+            box-shadow: 0 0 25px #ffd166;
+        }
+        
+        .light.purple.active {
+            background-color: #9d4edd;
+            box-shadow: 0 0 25px #9d4edd;
+        }
+        
+        .download-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .download-btn {
+            background: linear-gradient(to right, #00b4db, #0083b0);
+            border: none;
+            color: white;
+            padding: 18px 30px;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 131, 176, 0.4);
+            min-width: 250px;
+            justify-content: center;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 131, 176, 0.6);
+            background: linear-gradient(to right, #00c6ff, #0099cc);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        .download-btn i {
+            font-size: 1.3rem;
+        }
+        
+        /* Market Analysis Section */
+        .download-market-analysis ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+        
+        .download-market-analysis li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            padding-left: 35px;
+        }
+        
+        .download-market-analysis li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #24fe41;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* Visuals Section */
+        .download-visuals-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .download-visual-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .download-visual-item:hover {
+            transform: translateY(-8px);
+        }
+        
+        .download-visual-img {
+            height: 160px;
+            background: linear-gradient(45deg, #1a2980, #26d0ce);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .download-visual-info {
+            padding: 15px;
+        }
+        
+        .download-visual-info h4 {
+            margin-bottom: 8px;
+            color: #7fd1ff;
+        }
+        
+        /* Control Panel */
+        .control-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .control-btn.active {
+            background: rgba(0, 180, 219, 0.3);
+            border-color: #00b4db;
+        }
+        
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .speed-control label {
+            color: #b0d7ff;
+        }
+        
+        .speed-control input {
+            width: 200px;
+            accent-color: #00b4db;
+        }
+        
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            font-style: italic;
+            color: #b0d7ff;
+        }
+        
+        .download-hub-footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #8cb3d9;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .download-hub-content {
+                flex-direction: column;
+            }
+            
+            .download-hub-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .light {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .download-btn {
+                min-width: 100%;
+            }
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
-    <!-- Loading Animation -->
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="container nav-container">
-            <a href="#home" class="logo"><i class="fas fa-crown"></i> Ouma Haningtone</a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-bg"></div>
-        <div class="container" style="display: flex; align-items: center;">
-            <div class="hero-content">
-                <p class="hero-subtitle">ICT Specialist | Data Analyst | Junior Developer</p>
-                <h1 class="fade-in">Ouma Haningtone</h1>
-                <p class="hero-description fade-in">
-                    A technically skilled professional with hands-on experience in computer systems support, 
-                    web development, data analysis, and emerging AI technologies. Committed to leveraging 
-                    technology for impactful solutions in Kisumu, Kenya, and beyond.
-                </p>
-                <div class="cta-buttons">
-                    <a href="#contact" class="btn btn-primary fade-in">
-                        <i class="fas fa-envelope"></i> Hire Me
-                    </a>
-                    <a href="#projects" class="btn btn-secondary fade-in">
-                        <i class="fas fa-code"></i> View Projects
-                    </a>
-                </div>
-            </div>
-            <div class="hero-image fade-in">
-                <div class="profile-img">
-                    <div class="profile-img-inner">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
+    <!-- Navigation and Header -->
+    <header>
         <div class="container">
-            <div class="section-title">
-                <h2>Core Competencies</h2>
-                <p>Technical skills and expertise across multiple domains</p>
+            <div class="header-content">
+                <div class="profile-image-container" id="profileFrame">
+                    <img src="HANSEC_Business_Card.jpg" alt="Ouma Haningtone" class="profile-image">
+                </div>
+                <div class="header-text">
+                    <h1>Market Visual Analysis Project</h1>
+                    <p>By Ouma Haningtone</p>
+                    <div class="frame-controls">
+                        <button class="frame-btn" onclick="setAutoRotation(true)">Auto Rotate</button>
+                        <button class="frame-btn" onclick="setFrameStyle('frame-style-1')">Rainbow</button>
+                        <button class="frame-btn" onclick="setFrameStyle('frame-style-2')">Ocean</button>
+                        <button class="frame-btn" onclick="setFrameStyle('frame-style-3')">Full Spectrum</button>
+                        <button class="frame-btn" onclick="setFrameStyle('frame-style-4')">Gradient Flow</button>
+                        <button class="frame-btn" onclick="setFrameStyle('frame-style-5')">Purple Dream</button>
+                    </div>
+                </div>
             </div>
-            <div class="skills-container">
-                <div class="skill-card fade-in">
-                    <div class="skill-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Data Science & Analysis</h3>
-                    <p>Transforming raw data into actionable insights using advanced tools and methodologies.</p>
-                    <div class="skill-tags">
-                        <span class="tag">Tableau</span>
-                        <span class="tag">Power BI</span>
-                        <span class="tag">Python</span>
-                        <span class="tag">R</span>
-                        <span class="tag">STATA</span>
-                        <span class="tag">Excel</span>
-                    </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="executive-summary">Executive Summary</a></li>
+                    <li><a href="#" class="nav-link" data-page="sales-dashboard">Sales Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-page="profit-dashboard">Profit Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-page="discount-dashboard">Discount Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-page="download-hub">Download Hub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Executive Summary Page -->
+    <main class="container dashboard-page active" id="executive-summary">
+        <section class="executive-summary">
+            <h2>General Executive Summary</h2>
+            <p>This document outlines three core dashboards: Sales, Profit, and Discount. Each serves a distinct analytical purpose and targets different business questions.</p>
+            
+            <div class="dashboard-overview">
+                <div class="dashboard-card">
+                    <h3>Sales Performance Dashboard</h3>
+                    <p>Provides overview of sales performance, focusing on Sales Trend over time, Sales Target, Regional sale, and Quarter by annual, semi-annual.</p>
+                    <a href="#" class="btn nav-link" data-page="sales-dashboard">View Dashboard</a>
                 </div>
-                <div class="skill-card fade-in">
-                    <div class="skill-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <h3>Networking & Systems</h3>
-                    <p>Infrastructure setup, maintenance, and troubleshooting for seamless operations.</p>
-                    <div class="skill-tags">
-                        <span class="tag">LAN Setup</span>
-                        <span class="tag">Cisco Hardware</span>
-                        <span class="tag">Linux OS</span>
-                        <span class="tag">Windows 11</span>
-                        <span class="tag">Troubleshooting</span>
-                    </div>
+                
+                <div class="dashboard-card">
+                    <h3>Profit Performance Dashboard</h3>
+                    <p>Provides visual summary of the business's geographical performance, sub-category of product, category with years profit, and shipping modes.</p>
+                    <a href="#" class="btn nav-link" data-page="profit-dashboard">View Dashboard</a>
                 </div>
-                <div class="skill-card fade-in">
-                    <div class="skill-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Web Development</h3>
-                    <p>Building responsive and interactive web solutions with modern technologies.</p>
-                    <div class="skill-tags">
-                        <span class="tag">HTML5</span>
-                        <span class="tag">CSS3</span>
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">GitHub</span>
-                        <span class="tag">Responsive Design</span>
-                    </div>
+                
+                <div class="dashboard-card">
+                    <h3>Discount Performance Dashboard</h3>
+                    <p>Analyzes discount performance by Segment per Category, Monthly Discount per Sales, States Discount, and Shipping mode discount.</p>
+                    <a href="#" class="btn nav-link" data-page="discount-dashboard">View Dashboard</a>
                 </div>
-                <div class="skill-card fade-in">
-                    <div class="skill-icon">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <h3>Field & Support Tools</h3>
-                    <p>Expertise in data collection, project management, and administrative systems.</p>
-                    <div class="skill-tags">
-                        <span class="tag">ODK</span>
-                        <span class="tag">KoboToolbox</span>
-                        <span class="tag">CommCare</span>
-                        <span class="tag">MS Office</span>
-                        <span class="tag">Google Workspace</span>
-                        <span class="tag">AI Tools</span>
-                    </div>
+            </div>
+        </section>
+        
+        <section class="contact-info">
+            <h2>Contact Information</h2>
+            <p>Email: <a href="mailto:Stiriohaningtone630@gmail.com">Stiriohaningtone630@gmail.com</a></p>
+            <p>Portfolio: <a href="https://bit.ly/appYangu" target="_blank">https://bit.ly/appYangu</a></p>
+        </section>
+    </main>
+
+    <!-- Sales Dashboard Page -->
+    <main class="container dashboard-page" id="sales-dashboard">
+        <div class="dashboard-header">
+            <h2>Sales Performance Dashboard</h2>
+            <div class="filter-controls">
+                <select id="yearFilter">
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                </select>
+                <select id="regionFilter">
+                    <option value="all">All Regions</option>
+                    <option value="north">North</option>
+                    <option value="south">South</option>
+                    <option value="east">East</option>
+                    <option value="west">West</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="chart-container">
+
+            <h3 class="chart-title">1.1 Sales Trend Over Time</h3>
+            <div class="chart-wrapper">
+                <canvas id="salesTrendChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">1.2 Sales vs Target</h3>
+            <div class="chart-wrapper">
+                <canvas id="salesVsTargetChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">1.3 Quarterly & Semi-Annual Sales</h3>
+            <div class="chart-wrapper">
+                <canvas id="quarterlySalesChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">1.4 Sales Dashboard</h3>
+            <p>This is a full dashboard for Sales and all related fields including years, months, Target, Region, and Quarter by annual, semi-annual.</p>
+            <div class="dashboard-overview">
+                <div class="dashboard-card">
+                    <h4>Total Sales</h4>
+                    <p class="metric-value">$2,910,000</p>
                 </div>
-                <div class="skill-card fade-in">
-                    <div class="skill-icon">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <h3>Monitoring and Evaluation</h3>
-                    <p>Expertise in data collection, project management, and administrative systems.</p>
-                    <div class="skill-tags">
-                        <span class="tag">Risk Matrix Development</span>
-                        <span class="tag">Conceptual Framework Development</span>
-                        <span class="tag">DIP Development </span>
-                        <span class="tag">Data Plan & Collection</span>
-                        <span class="tag">Logframe Development</span>
+                <div class="dashboard-card">
+                    <h4>Sales Target Achievement</h4>
+                    <p class="metric-value">104%</p>
+                </div>
+                <div class="dashboard-card">
+                    <h4>Best Performing Quarter</h4>
+                    <p class="metric-value">Q4</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Profit Dashboard Page -->
+    <main class="container dashboard-page" id="profit-dashboard">
+        <div class="dashboard-header">
+            <h2>Profit Performance Dashboard</h2>
+            <div class="filter-controls">
+                <select id="profitYearFilter">
+                    <option value="all">All Years</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                </select>
+                <select id="profitCategoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Office Supplies">Office Supplies</option>
+                    <option value="Technology">Technology</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">2.1 Profit by Sub-Category</h3>
+            <div class="chart-wrapper">
+                <canvas id="profitBySubCategoryChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">2.2 Profit by Category</h3>
+            <div class="chart-wrapper">
+                <canvas id="profitByCategoryChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">2.3 Profit by Shipping Mode</h3>
+            <p>Reveals which region that support high, low shipping, which type shipping class mode and on which day and category of product.</p>
+            <div class="dashboard-overview">
+                <div class="dashboard-card">
+                    <h4>Most Profitable Shipping</h4>
+                    <p class="metric-value">Standard Class</p>
+                </div>
+                <div class="dashboard-card">
+                    <h4>Highest Profit Region</h4>
+                    <p class="metric-value">West</p>
+                </div>
+                <div class="dashboard-card">
+                    <h4>Most Profitable Category</h4>
+                    <p class="metric-value">Technology</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">2.4 Profit Dashboard</h3>
+            <p>This is a full dashboard for Profit it entails: sub-category of product, category with years profit, shipping modes.</p>
+        </div>
+    </main>
+
+    <!-- Discount Dashboard Page -->
+    <main class="container dashboard-page" id="discount-dashboard">
+        <div class="dashboard-header">
+            <h2>Discount Performance Dashboard</h2>
+            <div class="filter-controls">
+                <select id="discountSegmentFilter">
+                    <option value="all">All Segments</option>
+                    <option value="Consumer">Consumer</option>
+                    <option value="Corporate">Corporate</option>
+                    <option value="Home Office">Home Office</option>
+                </select>
+                <select id="discountCategoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Office Supplies">Office Supplies</option>
+                    <option value="Technology">Technology</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">3.1 Discount per Category/Segment</h3>
+            <div class="chart-wrapper">
+                <canvas id="discountBySegmentChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">3.2 Monthly Discount vs Sales</h3>
+            <div class="chart-wrapper">
+                <canvas id="monthlyDiscountChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">3.3 State-Level Discount Distribution</h3>
+            <div class="chart-wrapper">
+                <canvas id="stateDiscountChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">3.4 Discount by Shipping Mode</h3>
+            <p>Evaluates how delivery methods influence discounting behavior.</p>
+            <div class="dashboard-overview">
+                <div class="dashboard-card">
+                    <h4>Highest Discount Shipping</h4>
+                    <p class="metric-value">Same Day</p>
+                </div>
+                <div class="dashboard-card">
+                    <h4>Lowest Discount Shipping</h4>
+                    <p class="metric-value">Standard Class</p>
+                </div>
+                <div class="dashboard-card">
+                    <h4>Average Discount Rate</h4>
+                    <p class="metric-value">14.2%</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 class="chart-title">3.5 Discount Dashboard</h3>
+            <p>Entails Segment per Category, Monthly Discount per Sales, States Discount, Shipping mode discount.</p>
+        </div>
+    </main>
+
+    <!-- Project Download Hub Page -->
+    <main class="dashboard-page" id="download-hub">
+        <div class="download-hub-section">
+            <div class="download-hub-container">
+                <div class="download-hub-header">
+                    <h1><i class="fas fa-cloud-download-alt"></i> Project Download Hub</h1>
+                    <p class="download-hub-subtitle">Access market analysis and project visuals with our interactive download interface. Click the buttons below to download project resources directly from Google Drive.</p>
+                </div>
+                
+                <div class="download-hub-content">
+                    <div class="download-hub-main">
+                        <div class="download-hub-panel download-section">
+                            <h2><i class="fas fa-download"></i> Download Project Files</h2>
+                            <p>Click on any button below to download the corresponding project file. The lights will animate simultaneously during download simulation.</p>
+                            
+                            <div class="light-indicator">
+                                <div class="light red" id="light1"></div>
+                                <div class="light blue" id="light2"></div>
+                                <div class="light green" id="light3"></div>
+                                <div class="light yellow" id="light4"></div>
+                                <div class="light purple" id="light5"></div>
+                            </div>
+                            
+                            <div class="download-buttons">
+                                <button class="download-btn" data-link="https://drive.google.com/file/d/1ExjBNYbh347KABA_lKHI1tU1sSLh_Djs/view?usp=drive_link" data-light="red">
+                                    <i class="fas fa-chart-bar"></i> Download Market Analysis
+                                </button>
+                                <button class="download-btn" data-link="https://docs.google.com/presentation/d/1j6sIVuasHN9OMj_br3fSn1aXxwuaOfDJ/edit?usp=drive_link&ouid=106584844138887682881&rtpof=true&sd=true" data-light="blue">
+                                    <i class="fas fa-images"></i> Download Project Visuals
+                                </button>
+                                <button class="download-btn" data-link="#" data-light="green">
+                                    <i class="fas fa-file-code"></i> Download Source Code
+                                </button>
+                                <button class="download-btn" data-link="#" data-light="yellow">
+                                    <i class="fas fa-file-pdf"></i> Download Documentation
+                                </button>
+                                <button class="download-btn" data-link="#" data-light="purple">
+                                    <i class="fas fa-database"></i> Download Dataset
+                                </button>
+                            </div>
+                            
+                            <div class="control-panel">
+                                <button class="control-btn active" id="autoMode">
+                                    <i class="fas fa-robot"></i> Auto Light Mode
+                                </button>
+                                <button class="control-btn" id="manualMode">
+                                    <i class="fas fa-hand-pointer"></i> Manual Light Mode
+                                </button>
+                                <button class="control-btn" id="resetLights">
+                                    <i class="fas fa-redo"></i> Reset Lights
+                                </button>
+                            </div>
+                            
+                            <div class="speed-control">
+                                <label for="speedRange">Light Animation Speed:</label>
+                                <input type="range" id="speedRange" min="100" max="2000" value="500">
+                                <span id="speedValue">500ms</span>
+                            </div>
+                            
+                            <div class="status" id="status">
+                                Auto light mode active. Lights will cycle automatically.
+                            </div>
+                        </div>
                         
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="experience">
-        <div class="container">
-            <div class="section-title">
-                <h2>Professional Journey</h2>
-                <p>Hands-on experience across technical and analytical roles</p>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item fade-in">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">April 2025 – Present</div>
-                    <h3>Youth Support Rover & Referral Coordinator</h3>
-                    <p>Center for the Study of Adolescent Health</p>
-                    <p>Managed sensitive communications and scheduling for youth support services, coordinating multiple stakeholder interactions while maintaining organized records, taking effectve notes and follow-up systems.</p>
-                </div>
-                <div class="timeline-item fade-in">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">September 2025 – December 2025</div>
-                    <h3>Data Analysis Mentor</h3>
-                    <p>AMREC</p>
-                    <p>Mentored peers in data visualization using Tableau and Power BI. Conducted quantitative research using mobile data collection tools (ODK, Kobo) and performed data cleaning in Python and R.</p>
-                </div>
-                <div class="timeline-item fade-in">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">January 2024 – July 2025</div>
-                    <h3>Computer Maintenance & Support Assistant</h3>
-                    <p>ICS College, Kisumu Branch</p>
-                    <p>Maintained LAN infrastructure and provided technical support for 500+ students and staff. Managed logistical setup of online examination systems, ensuring 100% network uptime.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <div class="section-title">
-                <h2>Featured Projects</h2>
-                <p>Practical applications of technical skills</p>
-            </div>
-            <div class="projects-container">
-                <div class="project-card fade-in">
-                    <div class="project-img">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>Market Visual Analysis</h3>
-                        <p>Interactive Tableau dashboards visualizing sales, profit, and discount metrics to support data-driven decision-making.</p>
-                        <div class="project-links">
-                            <a href="https://hansec-technology-dot.github.io/port1_host" class="project-link" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
+                        <div class="download-hub-panel download-market-analysis">
+                            <h2><i class="fas fa-chart-line"></i> Market Analysis Highlights</h2>
+                            <ul>
+                                <li>Comprehensive market size assessment with growth projections</li>
+                                <li>Competitor analysis and market positioning strategy</li>
+                                <li>Target audience segmentation and user behavior patterns</li>
+                                <li>SWOT analysis (Strengths, Weaknesses, Opportunities, Threats)</li>
+                                <li>Revenue model and monetization strategy breakdown</li>
+                                <li>Risk assessment and mitigation strategies</li>
+                                <li>Market entry and expansion recommendations</li>
+                            </ul>
                         </div>
                     </div>
-                </div>
-                <div class="project-card fade-in">
-                    <div class="project-img">
-                        <i class="fas fa-stethoscope"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>HanSec Medical & Rosetrapy</h3>
-                        <p>Landing page development with AI Agent integration for medical terminology search and automated PDF data extraction using Python.</p>
-                        <div class="project-links">
-                            <a href="https://hansec-technology-dot.github.io/Ouma-Haningtone/" class="project-link" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> View Portfolio
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card fade-in">
-                    <div class="project-img">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>Professional Portfolio</h3>
-                        <p>This responsive website showcasing skills, experience, and projects with luxury design and interactive elements.</p>
-                        <div class="project-links">
-                            <a href="#contact" class="project-link">
-                                <i class="fas fa-code"></i> Customize for You
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
-                <p>Ready to collaborate on your next project</p>
-            </div>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <div class="contact-item fade-in">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h3>Location</h3>
-                            <p>Kisumu, Kenya</p>
-                        </div>
-                    </div>
-                    <div class="contact-item fade-in">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div>
-                            <h3>Phone</h3>
-                            <p>+254 743 489 272</p>
-                        </div>
-                    </div>
-                    <div class="contact-item fade-in">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h3>Email</h3>
-                            <p>stiriohaningtone630@gmail.com</p>
+                    
+                    <div class="download-hub-side">
+                        <div class="download-hub-panel">
+                            <h2><i class="fas fa-eye"></i> Project Visuals Preview</h2>
+                            <p>Visual materials included in the project presentation:</p>
                             
+                            <div class="download-visuals-container">
+                                <div class="download-visual-item">
+                                    <div class="download-visual-img">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                    <div class="download-visual-info">
+                                        <h4>Market Share Analysis</h4>
+                                        <p>Interactive charts showing market distribution</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="download-visual-item">
+                                    <div class="download-visual-img">
+                                        <i class="fas fa-project-diagram"></i>
+                                    </div>
+                                    <div class="download-visual-info">
+                                        <h4>Project Architecture</h4>
+                                        <p>System design and workflow diagrams</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="download-visual-item">
+                                    <div class="download-visual-img">
+                                        <i class="fas fa-user-friends"></i>
+                                    </div>
+                                    <div class="download-visual-info">
+                                        <h4>User Personas</h4>
+                                        <p>Target audience profiles and use cases</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="download-visual-item">
+                                    <div class="download-visual-img">
+                                        <i class="fas fa-road"></i>
+                                    </div>
+                                    <div class="download-visual-info">
+                                        <h4>Development Roadmap</h4>
+                                        <p>Timeline and milestone visualization</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="contact-item fade-in">
-                        <div class="contact-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <div>
-                            <h3>LinkdIn</h3>
-                            <p>https://bit.ly/Haningtone_LinkedIn</p>
+                        
+                        <div class="download-hub-panel">
+                            <h2><i class="fas fa-info-circle"></i> Download Instructions</h2>
+                            <p>1. Select the file you want to download by clicking the corresponding button</p>
+                            <p>2. The lights will animate to indicate download simulation</p>
+                            <p>3. You will be redirected to Google Drive to access the file</p>
+                            <p>4. Use the control panel to change light animation modes</p>
+                            <p>5. Adjust the speed slider to control light animation speed</p>
                             
+                            <div style="margin-top: 20px; padding: 15px; background: rgba(0, 180, 219, 0.1); border-radius: 10px;">
+                                <h4 style="color: #7fd1ff; margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i> Note</h4>
+                                <p style="font-size: 0.9rem;">The download links will open in a new tab. For the actual project, replace the placeholder links with your actual Google Drive file links.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="contact-form fade-in">
-                    <h3>Send a Message</h3>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Your Email</label>
-                            <input type="email" id="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" class="form-control" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            <i class="fas fa-paper-plane"></i> Send Message
-                        </button>
-                    </form>
+                
+                <div class="download-hub-footer">
+                    <p>Project Download Hub &copy; 2023 | Interactive Interface with Simultaneous Light Animation</p>
+                    <p style="margin-top: 10px; font-size: 0.8rem;">This interface simulates the download process with visual feedback through animated lights.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="social-links">
-                <a href="mailto:stiriohaningtone630@gmail.com" class="social-link">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="https://hansec-technology-dot.github.io/Ouma-Haningtone/" class="social-link" target="_blank">
-                    <i class="fas fa-globe"></i>
-                </a>
-                <a href="tel:+254743489272" class="social-link">
-                    <i class="fas fa-phone"></i>
-                </a>
-                <a href="https://bit.ly/Haningtone_LinkedIn" class="social-link">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="#" class="social-link">
-                    <i class="fab fa-github"></i>
-                </a>
-            </div>
-            <p class="copyright">
-                &copy; 2026 Ouma Haningtone. All Rights Reserved.<br>
-                ICT Specialist | Data Analyst | Junior Developer
-            </p>
+            <p>&copy; 2025 Ouma Haningtone - Market Visual Analysis Project</p>
+            <p>Contact: <a href="mailto:Stiriohaningtone630@gmail.com">Stiriohaningtone630@gmail.com</a> | 
+            Portfolio: <a href="https://bit.ly/appYangu" target="_blank">https://bit.ly/appYangu</a></p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script>
-        // ===== DOM ELEMENTS =====
-        const loading = document.getElementById('loading');
-        const navbar = document.getElementById('navbar');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
-        const contactForm = document.getElementById('contactForm');
-        const fadeElements = document.querySelectorAll('.fade-in');
-
-        // ===== PAGE LOAD =====
-        window.addEventListener('load', () => {
-            // Hide loading screen
-            setTimeout(() => {
-                loading.classList.add('hidden');
-            }, 800);
-            
-            // Initialize animations
-            checkFade();
-        });
-
-        // ===== NAVIGATION SCROLL EFFECT =====
-        window.addEventListener('scroll', () => {
-            // Add/remove scrolled class on navbar
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+        // JavaScript Data and Functions
+        // Dashboard data (simulating JSON data)
+        const dashboardData = {
+            sales: {
+                trend: [
+                    {month: "Jan", sales: 185000},
+                    {month: "Feb", sales: 210000},
+                    {month: "Mar", sales: 195000},
+                    {month: "Apr", sales: 220000},
+                    {month: "May", sales: 240000},
+                    {month: "Jun", sales: 235000},
+                    {month: "Jul", sales: 250000},
+                    {month: "Aug", sales: 265000},
+                    {month: "Sep", sales: 255000},
+                    {month: "Oct", sales: 270000},
+                    {month: "Nov", sales: 285000},
+                    {month: "Dec", sales: 300000}
+                ],
+                vsTarget: [
+                    {category: "Furniture", actual: 180000, target: 200000},
+                    {category: "Office Supplies", actual: 220000, target: 210000},
+                    {category: "Technology", actual: 280000, target: 250000}
+                ],
+                quarterly: [
+                    {quarter: "Q1", sales: 590000},
+                    {quarter: "Q2", sales: 695000},
+                    {quarter: "Q3", sales: 770000},
+                    {quarter: "Q4", sales: 855000}
+                ]
+            },
+            profit: {
+                bySubCategory: [
+                    {subCategory: "Accessories", category: "Technology", profit: 3473},
+                    {subCategory: "Appliances", category: "Technology", profit: 32022},
+                    {subCategory: "Art", category: "Office Supplies", profit: 13058},
+                    {subCategory: "Binders", category: "Office Supplies", profit: 44516},
+                    {subCategory: "Bookcases", category: "Furniture", profit: 55618},
+                    {subCategory: "Chairs", category: "Furniture", profit: 35018},
+                    {subCategory: "Copiers", category: "Technology", profit: 17725}
+                ],
+                byCategory: [
+                    {category: "Furniture", year: 2016, profit: 5218},
+                    {category: "Furniture", year: 2017, profit: 3245},
+                    {category: "Furniture", year: 2018, profit: 6873},
+                    {category: "Furniture", year: 2019, profit: 2626},
+                    {category: "Furniture", year: 2020, profit: 489},
+                    {category: "Office Supplies", year: 2016, profit: 21968},
+                    {category: "Office Supplies", year: 2017, profit: 25089},
+                    {category: "Office Supplies", year: 2018, profit: 35601},
+                    {category: "Office Supplies", year: 2019, profit: 39447},
+                    {category: "Office Supplies", year: 2020, profit: 416},
+                    {category: "Technology", year: 2016, profit: 20107},
+                    {category: "Technology", year: 2017, profit: 34547},
+                    {category: "Technology", year: 2018, profit: 40467},
+                    {category: "Technology", year: 2019, profit: 50204},
+                    {category: "Technology", year: 2020, profit: 29}
+                ]
+            },
+            discount: {
+                bySegment: [
+                    {category: "Furniture", segment: "Consumer", discount: 18},
+                    {category: "Furniture", segment: "Corporate", discount: 17},
+                    {category: "Furniture", segment: "Home Office", discount: 17},
+                    {category: "Office Supplies", segment: "Consumer", discount: 16},
+                    {category: "Office Supplies", segment: "Corporate", discount: 16},
+                    {category: "Office Supplies", segment: "Home Office", discount: 15},
+                    {category: "Technology", segment: "Consumer", discount: 13},
+                    {category: "Technology", segment: "Corporate", discount: 13},
+                    {category: "Technology", segment: "Home Office", discount: 13}
+                ],
+                monthlyVsSales: [
+                    {month: "Jan", discount: 12, sales: 185000},
+                    {month: "Feb", discount: 14, sales: 210000},
+                    {month: "Mar", discount: 11, sales: 195000},
+                    {month: "Apr", discount: 13, sales: 220000},
+                    {month: "May", discount: 15, sales: 240000},
+                    {month: "Jun", discount: 16, sales: 235000},
+                    {month: "Jul", discount: 14, sales: 250000},
+                    {month: "Aug", discount: 17, sales: 265000},
+                    {month: "Sep", discount: 15, sales: 255000},
+                    {month: "Oct", discount: 18, sales: 270000},
+                    {month: "Nov", discount: 20, sales: 285000},
+                    {month: "Dec", discount: 22, sales: 300000}
+                ],
+                byState: [
+                    {state: "Washington", discount: 6},
+                    {state: "Wyoming", discount: 9},
+                    {state: "Colorado", discount: 12},
+                    {state: "North Dakota", discount: 0},
+                    {state: "Minnesota", discount: 0},
+                    {state: "Wisconsin", discount: 10},
+                    {state: "Missouri", discount: 5},
+                    {state: "Maryland", discount: 4},
+                    {state: "Oregon", discount: 23},
+                    {state: "South Dakota", discount: 0},
+                    {state: "Nevada", discount: 8},
+                    {state: "Nebraska", discount: 0},
+                    {state: "California", discount: 7},
+                    {state: "Kansas", discount: 0},
+                    {state: "Arizona", discount: 30},
+                    {state: "Oklahoma", discount: 0},
+                    {state: "New Mexico", discount: 6},
+                    {state: "Texas", discount: 37}
+                ]
             }
+        };
+
+        // Frame control functions
+        function setFrameStyle(style) {
+            const profileFrame = document.getElementById('profileFrame');
             
-            // Update active nav link
-            updateActiveNavLink();
+            // Remove all frame classes
+            profileFrame.classList.remove('frame-style-1', 'frame-style-2', 'frame-style-3', 'frame-style-4', 'frame-style-5');
             
-            // Trigger fade animations
-            checkFade();
-        });
-
-        // ===== MOBILE MENU TOGGLE =====
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            });
-        });
-
-        // ===== FADE IN ANIMATIONS =====
-        function checkFade() {
-            fadeElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
+            // Remove auto rotation animation
+            profileFrame.style.animation = 'none';
+            
+            // Add the selected style
+            setTimeout(() => {
+                profileFrame.classList.add(style);
                 
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('visible');
+                // Add appropriate animation based on style
+                switch(style) {
+                    case 'frame-style-1':
+                        profileFrame.style.animation = 'rotateFrame 3s linear infinite';
+                        break;
+                    case 'frame-style-2':
+                        profileFrame.style.animation = 'gradientFrame 3s ease infinite';
+                        break;
+                    case 'frame-style-3':
+                        profileFrame.style.animation = 'rotateFrame 4s linear infinite';
+                        break;
+                    case 'frame-style-4':
+                        profileFrame.style.animation = 'moveBackground 8s ease-in-out infinite';
+                        break;
+                    case 'frame-style-5':
+                        profileFrame.style.animation = 'gradientMove 6s ease infinite';
+                        break;
                 }
-            });
+            }, 10);
         }
 
-        // ===== ACTIVE NAV LINK UPDATE =====
-        function updateActiveNavLink() {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-links a');
+        function setAutoRotation(enable) {
+            const profileFrame = document.getElementById('profileFrame');
             
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
+            if (enable) {
+                // Remove all specific frame classes
+                profileFrame.classList.remove('frame-style-1', 'frame-style-2', 'frame-style-3', 'frame-style-4', 'frame-style-5');
                 
-                if (scrollY >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
-                }
-            });
+                // Apply auto rotation animation
+                profileFrame.style.animation = 'autoRotateFrame 12s linear infinite';
+            }
+        }
+
+        // Utility functions
+        function formatCurrency(value) {
+            return '$' + value.toLocaleString();
+        }
+
+        function formatPercentage(value) {
+            return value + '%';
+        }
+
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            const dashboardPages = document.querySelectorAll('.dashboard-page');
             
             navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').substring(1) === current) {
-                    link.classList.add('active');
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and pages
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    dashboardPages.forEach(page => page.classList.remove('active'));
+                    
+                    // Add active class to clicked link and corresponding page
+                    this.classList.add('active');
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Initialize charts for the current page
+                    if (pageId === 'executive-summary') {
+                        // No charts on executive summary
+                    } else if (pageId === 'sales-dashboard') {
+                        initSalesCharts();
+                    } else if (pageId === 'profit-dashboard') {
+                        initProfitCharts();
+                    } else if (pageId === 'discount-dashboard') {
+                        initDiscountCharts();
+                    } else if (pageId === 'download-hub') {
+                        initDownloadHub();
+                    }
+                });
+            });
+            
+            // Start with auto rotation enabled
+            setAutoRotation(true);
+            
+            // Initialize charts for the current page
+            if (document.getElementById('executive-summary').classList.contains('active')) {
+                // No charts on executive summary
+            } else if (document.getElementById('sales-dashboard').classList.contains('active')) {
+                initSalesCharts();
+            } else if (document.getElementById('profit-dashboard').classList.contains('active')) {
+                initProfitCharts();
+            } else if (document.getElementById('discount-dashboard').classList.contains('active')) {
+                initDiscountCharts();
+            }
+        });
+
+        // Sales Charts
+        function initSalesCharts() {
+            const salesData = dashboardData.sales;
+            
+            // 1.1 Sales Trend Over Time
+            const salesTrendCtx = document.getElementById('salesTrendChart').getContext('2d');
+            new Chart(salesTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: salesData.trend.map(item => item.month),
+                    datasets: [{
+                        label: 'Sales ($)',
+                        data: salesData.trend.map(item => item.sales),
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Sales Trend Over Time'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Sales: ${formatCurrency(context.parsed.y)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // 1.2 Sales vs Target
+            const salesVsTargetCtx = document.getElementById('salesVsTargetChart').getContext('2d');
+            new Chart(salesVsTargetCtx, {
+                type: 'bar',
+                data: {
+                    labels: salesData.vsTarget.map(item => item.category),
+                    datasets: [
+                        {
+                            label: 'Actual Sales',
+                            data: salesData.vsTarget.map(item => item.actual),
+                            backgroundColor: '#2ecc71'
+                        },
+                        {
+                            label: 'Target',
+                            data: salesData.vsTarget.map(item => item.target),
+                            backgroundColor: '#e74c3c'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Sales vs Target'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${formatCurrency(context.parsed.y)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // 1.3 Quarterly & Semi-Annual Sales
+            const quarterlySalesCtx = document.getElementById('quarterlySalesChart').getContext('2d');
+            new Chart(quarterlySalesCtx, {
+                type: 'bar',
+                data: {
+                    labels: salesData.quarterly.map(item => item.quarter),
+                    datasets: [{
+                        label: 'Quarterly Sales',
+                        data: salesData.quarterly.map(item => item.sales),
+                        backgroundColor: [
+                            '#3498db',
+                            '#2ecc71',
+                            '#e74c3c',
+                            '#f39c12'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Quarterly Sales'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Sales: ${formatCurrency(context.parsed.y)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Filter functionality
+            document.getElementById('yearFilter').addEventListener('change', function() {
+                alert(`Filtering data for year: ${this.value}. In a full implementation, this would update the charts with new data.`);
+            });
+        }
+
+        // Profit Charts
+        function initProfitCharts() {
+            const profitData = dashboardData.profit;
+            
+            // 2.1 Profit by Sub-Category
+            const profitBySubCategoryCtx = document.getElementById('profitBySubCategoryChart').getContext('2d');
+            new Chart(profitBySubCategoryCtx, {
+                type: 'bar',
+                data: {
+                    labels: profitData.bySubCategory.map(item => item.subCategory),
+                    datasets: [{
+                        label: 'Profit ($)',
+                        data: profitData.bySubCategory.map(item => item.profit),
+                        backgroundColor: profitData.bySubCategory.map(item => {
+                            switch(item.category) {
+                                case 'Furniture': return '#3498db';
+                                case 'Office Supplies': return '#2ecc71';
+                                case 'Technology': return '#e74c3c';
+                                default: return '#95a5a6';
+                            }
+                        })
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Profit by Sub-Category'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Profit: ${formatCurrency(context.parsed.x)}`;
+                                },
+                                afterLabel: function(context) {
+                                    const item = profitData.bySubCategory[context.dataIndex];
+                                    return `Category: ${item.category}`;
+                                }
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // 2.2 Profit by Category
+            const categories = [...new Set(profitData.byCategory.map(item => item.category))];
+            const years = [...new Set(profitData.byCategory.map(item => item.year))].sort();
+            
+            const datasets = categories.map(category => {
+                return {
+                    label: category,
+                    data: years.map(year => {
+                        const item = profitData.byCategory.find(d => d.category === category && d.year === year);
+                        return item ? item.profit : 0;
+                    }),
+                    backgroundColor: category === 'Furniture' ? '#3498db' : 
+                                    category === 'Office Supplies' ? '#2ecc71' : '#e74c3c'
+                };
+            });
+            
+            const profitByCategoryCtx = document.getElementById('profitByCategoryChart').getContext('2d');
+            new Chart(profitByCategoryCtx, {
+                type: 'bar',
+                data: {
+                    labels: years,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Profit by Category and Year'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${formatCurrency(context.parsed.y)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    }
                 }
             });
         }
 
-        // ===== CONTACT FORM SUBMISSION =====
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+        // Discount Charts
+        function initDiscountCharts() {
+            const discountData = dashboardData.discount;
             
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
+            // 3.1 Discount per Category/Segment
+            const segments = [...new Set(discountData.bySegment.map(item => item.segment))];
+            const categories = [...new Set(discountData.bySegment.map(item => item.category))];
             
-            // In a real application, you would send this data to a server
-            // For now, we'll show a success message
-            alert(`Thank you, ${name}! Your message has been sent. I'll get back to you at ${email} soon.`);
+            const discountBySegmentDatasets = segments.map(segment => {
+                return {
+                    label: segment,
+                    data: categories.map(category => {
+                        const item = discountData.bySegment.find(d => d.category === category && d.segment === segment);
+                        return item ? item.discount : 0;
+                    }),
+                    backgroundColor: segment === 'Consumer' ? '#3498db' : 
+                                    segment === 'Corporate' ? '#2ecc71' : '#e74c3c'
+                };
+            });
             
-            // Reset form
-            contactForm.reset();
-            
-            // Log to console (for demonstration)
-            console.log('Contact Form Submission:', { name, email, subject, message });
-        });
-
-        // ===== SMOOTH SCROLL =====
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+            const discountBySegmentCtx = document.getElementById('discountBySegmentChart').getContext('2d');
+            new Chart(discountBySegmentCtx, {
+                type: 'bar',
+                data: {
+                    labels: categories,
+                    datasets: discountBySegmentDatasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Discount by Segment per Category'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${formatPercentage(context.parsed.y)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 25,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatPercentage(value);
+                                }
+                            }
+                        }
+                    }
                 }
             });
-        });
+            
+            // 3.2 Monthly Discount vs Sales
+            const monthlyDiscountCtx = document.getElementById('monthlyDiscountChart').getContext('2d');
+            new Chart(monthlyDiscountCtx, {
+                type: 'line',
+                data: {
+                    labels: discountData.monthlyVsSales.map(item => item.month),
+                    datasets: [
+                        {
+                            label: 'Discount (%)',
+                            data: discountData.monthlyVsSales.map(item => item.discount),
+                            borderColor: '#e74c3c',
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            yAxisID: 'y',
+                            borderWidth: 2,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Sales ($)',
+                            data: discountData.monthlyVsSales.map(item => item.sales),
+                            borderColor: '#3498db',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            yAxisID: 'y1',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Monthly Discount vs Sales'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        if (label.includes('Discount')) {
+                                            label += `: ${formatPercentage(context.parsed.y)}`;
+                                        } else {
+                                            label += `: ${formatCurrency(context.parsed.y)}`;
+                                        }
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Discount (%)'
+                            },
+                            max: 25,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatPercentage(value);
+                                }
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Sales ($)'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        },
+                    }
+                }
+            });
+            
+            // 3.3 State-Level Discount Distribution
+            const stateDiscountCtx = document.getElementById('stateDiscountChart').getContext('2d');
+            new Chart(stateDiscountCtx, {
+                type: 'bar',
+                data: {
+                    labels: discountData.byState.map(item => item.state),
+                    datasets: [{
+                        label: 'Discount (%)',
+                        data: discountData.byState.map(item => item.discount),
+                        backgroundColor: discountData.byState.map(item => {
+                            if (item.discount === 0) return '#95a5a6';
+                            if (item.discount < 10) return '#2ecc71';
+                            if (item.discount < 20) return '#f39c12';
+                            return '#e74c3c';
+                        })
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'State-Level Discount Distribution'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Discount: ${formatPercentage(context.parsed.y)}`;
+                                }
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 40,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatPercentage(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
 
-        // ===== TYPING EFFECT FOR HERO (Optional Enhancement) =====
-        function initTypingEffect() {
-            const heroTitle = document.querySelector('.hero h1');
-            if (!heroTitle) return;
+        }
+
+        // Download Hub Functionality
+        function initDownloadHub() {
+            // Get all elements
+            const lights = document.querySelectorAll('.light');
+            const downloadButtons = document.querySelectorAll('.download-btn');
+            const autoModeBtn = document.getElementById('autoMode');
+            const manualModeBtn = document.getElementById('manualMode');
+            const resetBtn = document.getElementById('resetLights');
+            const speedRange = document.getElementById('speedRange');
+            const speedValue = document.getElementById('speedValue');
+            const status = document.getElementById('status');
             
-            const originalText = heroTitle.textContent;
-            heroTitle.textContent = '';
-            let i = 0;
+            // State variables
+            let autoMode = true;
+            let animationSpeed = 500; // milliseconds
+            let animationInterval;
             
-            function typeWriter() {
-                if (i < originalText.length) {
-                    heroTitle.textContent += originalText.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 50);
+            // Initialize lights
+            function initLights() {
+                // Start with first light active
+                lights[0].classList.add('active');
+                
+                // Start auto animation if in auto mode
+                if (autoMode) {
+                    startAutoAnimation();
                 }
             }
             
-            // Start typing effect when element is visible
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    setTimeout(typeWriter, 500);
-                    observer.disconnect();
+            // Start automatic light animation
+            function startAutoAnimation() {
+                clearInterval(animationInterval);
+                
+                let currentLight = 0;
+                
+                animationInterval = setInterval(() => {
+                    // Deactivate all lights
+                    lights.forEach(light => {
+                        light.classList.remove('active');
+                    });
+                    
+                    // Activate current light
+                    lights[currentLight].classList.add('active');
+                    
+                    // Move to next light
+                    currentLight = (currentLight + 1) % lights.length;
+                }, animationSpeed);
+            }
+            
+            // Stop automatic animation
+            function stopAutoAnimation() {
+                clearInterval(animationInterval);
+            }
+            
+            // Activate specific light by color
+            function activateLight(color) {
+                // Deactivate all lights
+                lights.forEach(light => {
+                    light.classList.remove('active');
+                });
+                
+                // Activate the specific light
+                const targetLight = document.querySelector(`.light.${color}`);
+                if (targetLight) {
+                    targetLight.classList.add('active');
+                }
+            }
+            
+            // Reset all lights to initial state
+            function resetLights() {
+                // Deactivate all lights
+                lights.forEach(light => {
+                    light.classList.remove('active');
+                });
+                
+                // If auto mode, restart animation
+                if (autoMode) {
+                    initLights();
+                } else {
+                    // Otherwise activate first light
+                    lights[0].classList.add('active');
+                }
+            }
+            
+            // Download button click handler
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const link = this.getAttribute('data-link');
+                    const lightColor = this.getAttribute('data-light');
+                    
+                    // If in auto mode, stop auto animation temporarily
+                    if (autoMode) {
+                        stopAutoAnimation();
+                    }
+                    
+                    // Activate the corresponding light
+                    activateLight(lightColor);
+                    
+                    // Update status
+                    status.textContent = `Downloading ${this.textContent.trim()}...`;
+                    status.style.color = "#24fe41";
+                    
+                    // Simulate download process
+                    setTimeout(() => {
+                        // Open the download link in a new tab
+                        if (link !== '#') {
+                            window.open(link, '_blank');
+                        }
+                        
+                        // Flash all lights to simulate completion
+                        lights.forEach(light => {
+                            light.classList.add('active');
+                        });
+                        
+                        // Update status
+                        status.textContent = `Download completed for ${this.textContent.trim()}!`;
+                        
+                        // After 2 seconds, return to normal
+                        setTimeout(() => {
+                            if (autoMode) {
+                                startAutoAnimation();
+                                status.textContent = "Auto light mode active. Lights will cycle automatically.";
+                            } else {
+                                activateLight(lightColor);
+                                status.textContent = "Manual mode active. Click buttons to activate lights.";
+                            }
+                            status.style.color = "#b0d7ff";
+                        }, 2000);
+                    }, 1500);
+                });
+            });
+            
+            // Control panel event handlers
+            autoModeBtn.addEventListener('click', function() {
+                if (!autoMode) {
+                    autoMode = true;
+                    this.classList.add('active');
+                    manualModeBtn.classList.remove('active');
+                    
+                    // Start auto animation
+                    startAutoAnimation();
+                    
+                    // Update status
+                    status.textContent = "Auto light mode active. Lights will cycle automatically.";
                 }
             });
             
-            observer.observe(heroTitle);
-        }
-
-        // Initialize typing effect
-        setTimeout(initTypingEffect, 1000);
-
-        // ===== SKILL TAGS INTERACTIVITY =====
-        document.querySelectorAll('.tag').forEach(tag => {
-            tag.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.1)';
-                this.style.transition = 'transform 0.2s ease';
+            manualModeBtn.addEventListener('click', function() {
+                if (autoMode) {
+                    autoMode = false;
+                    this.classList.add('active');
+                    autoModeBtn.classList.remove('active');
+                    
+                    // Stop auto animation
+                    stopAutoAnimation();
+                    
+                    // Activate first light
+                    resetLights();
+                    
+                    // Update status
+                    status.textContent = "Manual mode active. Click buttons to activate lights.";
+                }
             });
             
-            tag.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
+            resetBtn.addEventListener('click', resetLights);
+            
+            // Speed control event handler
+            speedRange.addEventListener('input', function() {
+                animationSpeed = 2050 - this.value; // Invert so slower = higher number
+                speedValue.textContent = `${animationSpeed}ms`;
+                
+                // If in auto mode, restart animation with new speed
+                if (autoMode) {
+                    startAutoAnimation();
+                }
             });
-        });
-
-        // ===== INITIAL ACTIVE NAV LINK =====
-        updateActiveNavLink();
+            
+            // Initialize the interface
+            initLights();
+            
+            // Add hover effect for manual mode
+            if (!autoMode) {
+                downloadButtons.forEach(button => {
+                    button.addEventListener('mouseenter', function() {
+                        const lightColor = this.getAttribute('data-light');
+                        activateLight(lightColor);
+                    });
+                });
+            }
+        }
     </script>
 </body>
 </html>
